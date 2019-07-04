@@ -114,7 +114,7 @@ cat <<EOF >nkn_start.sh
 screen -dmS NKM_node nknd -p $WPASSWORD --config $HOMEFOLDER/$FCONFIG --wallet $HOMEFOLDER/$FWALLET
 EOF
 
-chown +x $HOMEFOLDER/nkn_start.sh
+chmod +x $HOMEFOLDER/nkn_start.sh
 
 sleep 2
 echo -e "${YELLOW}Writing new crontab...${NC}"
