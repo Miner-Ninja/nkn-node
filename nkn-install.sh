@@ -36,7 +36,7 @@ if [ -f nknd ]; then
         echo -e "${YELLOW}Unzipping bin files...${NC}"
         unzip $FNAME >/dev/null 2>&1
         echo -e "${YELLOW}Moving bin files...${NC}"
-        mv $APATH/nkn* /usr/bin/
+        sudo mv $APATH/nkn* /usr/bin/
         rm -rf $APATH
         rm $FNAME ; fi
         
