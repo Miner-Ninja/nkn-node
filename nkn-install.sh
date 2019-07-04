@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ARCHIVE="https://github.com/nknorg/nkn/releases/download/v1.0.1b-beta/linux-amd64.zip"
+SOURCE_URL="https://github.com/nknorg/nkn/releases/download/v1.0.1b-beta/linux-amd64.zip"
 FNAME="linux-amd64.zip"
 APATH="linux-amd64"
 FCONFIG="config.json"
@@ -32,14 +32,14 @@ if [ -f nknd ]; then
         echo -e "${RED}Bin files exist!${NC}"
         else
         echo -e "${YELLOW}Downloading bin files...${NC}"
-        wget $ARCHIVE
+        wget $SOURCE_URL
         echo -e "${YELLOW}Unzipping bin files...${NC}"
         unzip $FNAME >/dev/null 2>&1
         echo -e "${YELLOW}Moving bin files...${NC}"
-        mv $APATH/nkn* .
+        mv $APATH/nkn* /usr/bin/
         rm -rf $APATH
         rm $FNAME ; fi
-
+        
 echo -n -e "${YELLOW}Input Your BeneficiaryAddr:${NC}"
 read -e ADDRESS
 echo
@@ -105,47 +105,30 @@ if [ -f $FWALLET ] ; then
         echo -e "${YELLOW}Create new wallet...${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD
-        ./nknc wallet -c -p $WPASSWORD
+        nknc wallet -c -p $WPASSWORD
         fi
 sleep 2
-echo -e "${YELLOW}Creating nkn service...${NC}"
-
-echo "[Unit]" > nkn.service
-echo "Description=nkn" >> nkn.service
-echo "[Service]" >> nkn.service
-echo "User=nkn" >> nkn.service
-echo -e "WorkingDirectory=$HOMEFOLDER" >> nkn.service
-echo -e "ExecStart=$HOMEFOLDER/nknd -p $WPASSWORD" >> nkn.service
-echo "Restart=always" >> nkn.service
-echo "RestartSec=3" >> nkn.service
-echo "LimitNOFILE=500000" >> nkn.service
-echo "[Install]" >> nkn.service
-echo "WantedBy=default.target" >> nkn.service
-
-sudo cp nkn.service /etc/systemd/system/nkn.service
-sudo systemctl enable nkn.service
-
-rm nkn.service
-
-#echo -e "${YELLOW}Writing new crontab...${NC}"
-#if ! crontab -l | grep "/nknd -p"; then
-#  (crontab -l ; echo "@reboot $HOMEFOLDER/nknd -p $WPASSWORD") | crontab -
-#fi
+echo -e "${YELLOW}Creating startup scrypt...${NC}"
+cat <<EOF >nkn_start.sh
+#!/bin/bash
+screen -dmS NKM_node nknd -p $WPASSWORD --config $HOMEFOLDER/$FCONFIG --wallet $HOMEFOLDER/$FWALLET
+EOF
+sleep 2
+echo -e "${YELLOW}Writing new crontab...${NC}"
+if ! crontab -l | grep "nkn_start.sh"; then
+  (crontab -l ; echo "screen -dmS NKM_node $HOMEFOLDER/nkn_start.sh" ) | crontab -
+fi
 
 echo -e "${YELLOW}firewall setup...${NC}"
 sudo ufw allow 30001/tcp
 sudo ufw allow 30002/tcp
 sudo ufw allow 30003/tcp
 
-echo -e "${MAG}Nkn node control:${NC}"
-echo -e "${CYAN}Start nkn node: ${BLUE}sudo systemctl start nkn.service${NC}"
-echo -e "${CYAN}Stop nkn node: ${BLUE}sudo systemctl stop nkn.service${NC}"
-echo -e "${CYAN}Enabe nkn service: ${BLUE}sudo systemctl enable nkn.service${NC}"
-echo -e "${CYAN}Disable nkn service: ${BLUE}sudo systemctl disable nkn.service${NC}"
-echo -e "${CYAN}Status nkn node: ${BLUE}sudo systemctl status nkn.service${NC}"
-echo -e "${YELLOW}or use command ./nknc info --state for statistics${NC}"
-echo -e "${CYAN}For nkn.service file editing: ${BLUE}sudo nano /etc/systemd/system/nkn.service${NC}"
-echo -e "${CYAN}After editing nkn.service file: ${BLUE}sudo systemctl daemon-reload${NC}"
+echo -e "${MAG}NKN node control:${NC}"
+echo -e "${CYAN}Startup scrypt: ${BLUE}$HOMEFOLDER/nkn_start.sh${NC}"
+echo -e "${YELLOW}Use screen -r command for view nkn node state, press CTRL+a+d for exit${NC}"
+echo -e "${CYAN}For nkn node info: ${BLUE}nknc info -s${NC}"
+echo -e "${CYAN}For wallet info: ${BLUE}nknc wallet -l balance${NC}"
 
 cd $CURRENTDIR
-rm -rf nkn
+#rm -rf nkn
