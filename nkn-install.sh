@@ -111,6 +111,7 @@ sleep 2
 echo -e "${YELLOW}Creating startup scrypt...${NC}"
 cat <<EOF >nkn_start.sh
 #!/bin/bash
+cd $HOMEFOLDER
 screen -dmS NKM_node nknd -p $WPASSWORD --config $HOMEFOLDER/$FCONFIG --wallet $HOMEFOLDER/$FWALLET
 EOF
 
@@ -132,10 +133,10 @@ cd $HOMEFOLDER
 bash nkn_start.sh
 
 echo -e "${MAG}NKN node control:${NC}"
-echo -e "${GREEN}Startup scrypt: ${PURPLE}$HOMEFOLDER/nkn_start.sh${NC}"
-echo -e "${GREEN}Use screen -r command for view nkn node state,${PURPLE} press CTRL+A+D for exit${NC}"
-echo -e "${GREEN}For nkn node info: ${PURPLE}nknc info -s${NC}"
-echo -e "${GREEN}For wallet info: ${PURPLE}nknc wallet -l balance${NC}"
+echo -e "${GREEN}Startup scrypt: ${YELLOW}$HOMEFOLDER /nkn_start.sh${NC}"
+echo -e "${GREEN}Use screen -r command for view nkn node state${YELLOW} CTRL+A+D to exit${NC}"
+echo -e "${GREEN}NKN node info: ${YELLOW}nknc info -s${NC}"
+echo -e "${GREEN}For wallet info: ${YELLOW}nknc wallet -l balance${NC}"
 
-cd $CURRENTDIR
-#rm -rf nkn
+cd ~/
+rm -rf nkn-install.sh
