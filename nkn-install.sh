@@ -116,7 +116,7 @@ EOF
 sleep 2
 echo -e "${YELLOW}Writing new crontab...${NC}"
 if ! crontab -l | grep "nkn_start.sh"; then
-  (crontab -l ; echo "screen -dmS NKM_node $HOMEFOLDER/nkn_start.sh" ) | crontab -
+  (crontab -l ; echo "@reboot screen -dmS NKM_node $HOMEFOLDER/nkn_start.sh" ) | crontab -
 fi
 
 echo -e "${YELLOW}firewall setup...${NC}"
