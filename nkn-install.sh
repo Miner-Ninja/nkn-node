@@ -124,6 +124,9 @@ sudo ufw allow 30001/tcp
 sudo ufw allow 30002/tcp
 sudo ufw allow 30003/tcp
 
+echo -e "${YELLOW}Starting NKN node...${NC}"
+screen -dmS NKM_node $HOMEFOLDER/nkn_start.sh
+
 echo -e "${MAG}NKN node control:${NC}"
 echo -e "${CYAN}Startup scrypt: ${BLUE}$HOMEFOLDER/nkn_start.sh${NC}"
 echo -e "${YELLOW}Use screen -r command for view nkn node state, press CTRL+a+d for exit${NC}"
