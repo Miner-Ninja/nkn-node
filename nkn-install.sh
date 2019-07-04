@@ -139,4 +139,4 @@ echo -e "${GREEN}NKN node info: ${YELLOW}nknc info -s${NC}"
 echo -e "${GREEN}For wallet info: ${YELLOW}nknc wallet -l balance${NC}"
 
 rm -rf $HOMEFOLDER/nkn_start.sh
-cd ~/
+cd ~
