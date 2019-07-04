@@ -135,8 +135,8 @@ bash nkn_start.sh
 echo -e "${MAG}NKN node control:${NC}"
 echo -e "${GREEN}Startup scrypt:${YELLOW} $HOMEFOLDER/nkn_start.sh${NC}"
 echo -e "${GREEN}Use screen -r command for view nkn node state${YELLOW} CTRL+A+D to exit${NC}"
-echo -e "${GREEN}NKN node info:${YELLOW} nknc info -s${NC}"
-echo -e "${GREEN}For wallet info:${YELLOW} nknc wallet -l balance${NC}"
+echo -e "${GREEN}NKN node info:${YELLOW} ./nknc info -s${NC}"
+echo -e "${GREEN}For wallet info:${YELLOW} ./nknc wallet -l balance${NC}"
 echo -e "${GREEN}Run all commands from NKN node install dir:${YELLOW} $HOMEFOLDER${NC}"
 
 rm -rf $HOMEFOLDER/nkn_start.sh
