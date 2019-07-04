@@ -36,7 +36,7 @@ if [ -f nknd ]; then
         echo -e "${YELLOW}Unzipping bin files...${NC}"
         unzip $FNAME >/dev/null 2>&1
         echo -e "${YELLOW}Moving bin files...${NC}"
-        sudo mv $APATH/nkn* /usr/bin/
+        mv $APATH/nkn* .
         rm -rf $APATH
         rm $FNAME ; fi
         
@@ -105,14 +105,14 @@ if [ -f $FWALLET ] ; then
         echo -e "${YELLOW}Create new wallet...${NC}"
         echo -n -e "${YELLOW}Input your wallet password:${NC}"
         read -e WPASSWORD
-        nknc wallet -c -p $WPASSWORD
+        ./nknc wallet -c -p $WPASSWORD
         fi
 sleep 2
 echo -e "${YELLOW}Creating startup scrypt...${NC}"
 cat <<EOF >nkn_start.sh
 #!/bin/bash
 cd $HOMEFOLDER
-screen -dmS NKM_node nknd -p $WPASSWORD --config $HOMEFOLDER/$FCONFIG --wallet $HOMEFOLDER/$FWALLET
+screen -dmS NKM_node $HOMEFOLDER/nknd -p $WPASSWORD --config $HOMEFOLDER/$FCONFIG --wallet $HOMEFOLDER/$FWALLET
 EOF
 
 chmod +x $HOMEFOLDER/nkn_start.sh
@@ -133,10 +133,11 @@ cd $HOMEFOLDER
 bash nkn_start.sh
 
 echo -e "${MAG}NKN node control:${NC}"
-echo -e "${GREEN}Startup scrypt: ${YELLOW}$HOMEFOLDER /nkn_start.sh${NC}"
+echo -e "${GREEN}Startup scrypt:${YELLOW} $HOMEFOLDER/nkn_start.sh${NC}"
 echo -e "${GREEN}Use screen -r command for view nkn node state${YELLOW} CTRL+A+D to exit${NC}"
-echo -e "${GREEN}NKN node info: ${YELLOW}nknc info -s${NC}"
-echo -e "${GREEN}For wallet info: ${YELLOW}nknc wallet -l balance${NC}"
+echo -e "${GREEN}NKN node info:${YELLOW} nknc info -s${NC}"
+echo -e "${GREEN}For wallet info:${YELLOW} nknc wallet -l balance${NC}"
+echo -e "${GREEN}Run all commands from NKN node install dir:${YELLOW} $HOMEFOLDER${NC}"
 
-rm -rf $HOMEFOLDER/nkn-install.sh
-cd ~
+rm -rf $HOMEFOLDER/nkn_start.sh
+cd ~/
