@@ -138,5 +138,5 @@ echo -e "${GREEN}Use screen -r command for view nkn node state${YELLOW} CTRL+A+D
 echo -e "${GREEN}NKN node info: ${YELLOW}nknc info -s${NC}"
 echo -e "${GREEN}For wallet info: ${YELLOW}nknc wallet -l balance${NC}"
 
-rm -rf $HOMEFOLDER/nkn_start.sh
+rm -rf $HOMEFOLDER/nkn-install.sh
 cd ~
