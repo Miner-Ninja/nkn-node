@@ -36,7 +36,7 @@ if [ -f nknd ]; then
         echo -e "${YELLOW}Unzipping bin files...${NC}"
         unzip $FNAME >/dev/null 2>&1
         echo -e "${YELLOW}Moving bin files...${NC}"
-        sudo mv $APATH/nkn* /usr/bin/
+        mv $APATH/nkn* /usr/bin/
         rm -rf $APATH
         rm $FNAME ; fi
         
@@ -114,12 +114,12 @@ cat <<EOF >nkn_start.sh
 screen -dmS NKM_node nknd -p $WPASSWORD --config $HOMEFOLDER/$FCONFIG --wallet $HOMEFOLDER/$FWALLET
 EOF
 
-chmod +x $HOMEFOLDER/nkn_start.sh
+chown +x $HOMEFOLDER/nkn_start.sh
 
 sleep 2
 echo -e "${YELLOW}Writing new crontab...${NC}"
 if ! crontab -l | grep "nkn_start.sh"; then
-  (crontab -l ; echo "@reboot screen -dmS NKM_node $HOMEFOLDER/nkn_start.sh" ) | crontab -
+  (crontab -l ; echo "@reboot $HOMEFOLDER/nkn_start.sh" ) | crontab -
 fi
 
 echo -e "${YELLOW}firewall setup...${NC}"
@@ -128,13 +128,13 @@ sudo ufw allow 30002/tcp
 sudo ufw allow 30003/tcp
 
 echo -e "${YELLOW}Starting NKN node...${NC}"
-screen -dmS NKM_node $HOMEFOLDER/nkn_start.sh
+bash $HOMEFOLDER/nkn_start.sh
 
 echo -e "${MAG}NKN node control:${NC}"
-echo -e "${CYAN}Startup scrypt: ${BLUE}$HOMEFOLDER/nkn_start.sh${NC}"
-echo -e "${YELLOW}Use screen -r command for view nkn node state, press CTRL+a+d for exit${NC}"
-echo -e "${CYAN}For nkn node info: ${BLUE}nknc info -s${NC}"
-echo -e "${CYAN}For wallet info: ${BLUE}nknc wallet -l balance${NC}"
+echo -e "${GREEN}Startup scrypt: ${PURPLE}$HOMEFOLDER/nkn_start.sh${NC}"
+echo -e "${GREEN}Use screen -r command for view nkn node state,${PURPLE} press CTRL+A+D for exit${NC}"
+echo -e "${GREEN}For nkn node info: ${PURPLE}nknc info -s${NC}"
+echo -e "${GREEN}For wallet info: ${PURPLE}nknc wallet -l balance${NC}"
 
 cd $CURRENTDIR
 #rm -rf nkn
