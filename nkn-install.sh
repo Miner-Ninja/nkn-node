@@ -128,7 +128,8 @@ sudo ufw allow 30002/tcp
 sudo ufw allow 30003/tcp
 
 echo -e "${YELLOW}Starting NKN node...${NC}"
-bash $HOMEFOLDER/nkn_start.sh
+cd $HOMEFOLDER
+bash nkn_start.sh
 
 echo -e "${MAG}NKN node control:${NC}"
 echo -e "${GREEN}Startup scrypt: ${PURPLE}$HOMEFOLDER/nkn_start.sh${NC}"
