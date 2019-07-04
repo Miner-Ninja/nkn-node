@@ -139,5 +139,5 @@ echo -e "${GREEN}NKN node info:${YELLOW} ./nknc info -s${NC}"
 echo -e "${GREEN}For wallet info:${YELLOW} ./nknc wallet -l balance${NC}"
 echo -e "${GREEN}Run all commands from NKN node install dir:${YELLOW} $HOMEFOLDER${NC}"
 
-rm -rf $HOMEFOLDER/nkn_start.sh
+rm -rf $HOMEFOLDER/nkn-install.sh
 cd ~/
