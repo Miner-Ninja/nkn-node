@@ -113,6 +113,9 @@ cat <<EOF >nkn_start.sh
 #!/bin/bash
 screen -dmS NKM_node nknd -p $WPASSWORD --config $HOMEFOLDER/$FCONFIG --wallet $HOMEFOLDER/$FWALLET
 EOF
+
+chown +x $HOMEFOLDER/nkn_start.sh
+
 sleep 2
 echo -e "${YELLOW}Writing new crontab...${NC}"
 if ! crontab -l | grep "nkn_start.sh"; then
