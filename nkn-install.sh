@@ -24,7 +24,7 @@ if [[ "$USER" == "root" ]]; then
         HOMEFOLDER="/home/$USER/nkn-node"
 fi
 
-apt install unzip wget -y 
+sudo apt install unzip wget git -y 
 CURRENTDIR=$(pwd)
 if [ -d $HOMEFOLDER ] ; then cd $HOMEFOLDER ; else mkdir $HOMEFOLDER; cd $HOMEFOLDER; fi
 if [ -f $FNAME ]; then rm $FNAME ; fi
