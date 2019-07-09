@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SOURCE_URL="https://github.com/nknorg/nkn/releases/download/v1.0.1b-beta/linux-amd64.zip"
+SOURCE_URL="https://github.com/nknorg/nkn/releases/download/v1.0.2-beta/linux-amd64.zip"
 FNAME="linux-amd64.zip"
 APATH="linux-amd64"
 FCONFIG="config.json"
